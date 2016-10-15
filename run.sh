@@ -153,6 +153,7 @@ esac
 # cut on fiducial
 for index in ${!CUT_ON_FIDUCIAL[*]}
 do
+    echo "deal with file ${CUT_ON_FIDUCIAL[index]}"
     CUT_1=${CHANNEL_PREFIX}"Cut.cxx"
     PLOT_1=${CHANNEL_PREFIX}"Cut.py"
 
@@ -167,7 +168,7 @@ do
     # cut on root file
     echo 
     echo "==================================="
-    echo "cut on fiducial root file"
+    echo "cut on ${PREFIX_1}.root"
     root -l << END
 .L $CUT_1
 cut("${CUT_ON_FIDUCIAL[0]}", "${PREFIX_1}_cut_hist.root")
@@ -187,7 +188,7 @@ END
     chmod +x VBFNLO_plot.py
     echo 
     echo "==================================="
-    echo "draw histograms"
+    echo "draw histograms from ${PREFIX_1}_cut_hist.root"
     ./VBFNLO_plot.py -b
     echo "end of drawing"
 
@@ -201,6 +202,7 @@ unset CUT_ON_FIDUCIAL
 
 while [ $# -gt 0 ]
 do
+    echo "deal with file ${1}"
     # check input file
     if [ "${1: -4}" == ".lhe" ]
     then
@@ -208,7 +210,7 @@ do
 	PREFIX=${1%.lhe}
 
 	echo "====================================="
-	echo "convert lhe file to root."
+	echo "convert ${1}.lhe to root."
 	./convert.py ${1} vbfnlo $PREFIX".root" 
 	if [ $? -eq 0 ]
 	then
@@ -232,7 +234,7 @@ do
     then
 	echo
 	echo "===================================="
-	echo "extract raw info."
+	echo "extract raw info from ${PREFIX}.root."
 	root -l << END
 .L $RAW
 raw("${PREFIX}.root", "${PREFIX}_raw.root")
@@ -255,7 +257,7 @@ END
     then
 	echo 
 	echo "==================================="
-	echo "extract fiducial info."
+	echo "extract fiducial info from ${PREFIX}.root."
 	root -l << END
 .L $FIDUCIAL
 fiducial("${PREFIX}.root", "${PREFIX}_fid.root")
@@ -278,7 +280,7 @@ END
     then
 	echo 
 	echo "==================================="
-	echo "cut on fiducial root file"
+	echo "cut on fiducial root file: ${PREFIX}_fid.root"
         root -l << END
 .L $CUT
 cut("${PREFIX}_fid.root", "${PREFIX}_cut_hist.root")
@@ -299,7 +301,7 @@ END
     then
 	echo 
 	echo "=================================="
-	echo "transform tree to hist"
+	echo "transform tree to hist with file $TREE2HIST"
 	root -l << END
 .L tree2hist.cxx
 Tree2Hist("$TREEINPUT", "$TREEOUTPUT")
@@ -320,7 +322,7 @@ END
     chmod +x VBFNLO_plot.py
     echo 
     echo "==================================="
-    echo "draw histograms"
+    echo "draw histograms from file $PLOT_HIST"
     ./VBFNLO_plot.py -b
     echo "end of drawing"
 

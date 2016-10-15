@@ -159,7 +159,7 @@ void raw(string input_file, string output_file)
 	for (int i=0; i<10; i++)
 	{
 	    if(status[i] != 1) continue;
-	    else if (abs(pdgID[i]) == 1 || abs(pdgID[i]) == 2 || abs(pdgID[i])==3 || abs(pdgID[i]) == 4) // pdgID[i] == 5 ???
+	    else if (abs(pdgID[i]) == 0 || abs(pdgID[i]) == 1 || abs(pdgID[i]) == 2 || abs(pdgID[i])==3 || abs(pdgID[i]) == 4 || abs(pdgID[i]) == 5 )
 	    {
                 jet[index_j].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
 		index_j++;
