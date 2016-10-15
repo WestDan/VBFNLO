@@ -161,7 +161,7 @@ void raw(string input_file, string output_file)
 
 	tin->GetEntry(n);
 
-	int index_e=0, index_j=0;
+	int index_l=0, index_j=0;
 	for (int i=0; i<10; i++)
 	{
 	    if(status[i] != 1) continue;
@@ -172,14 +172,21 @@ void raw(string input_file, string output_file)
 	    }
 	    else if ( abs(pdgID[i]) == 11) // electron
 	    {
-		lep[index_e].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
-		parent1_l[index_e] = parent1_index[i];
-		parent2_l[index_e] = parent2_index[i];
-		index_e++;
+		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		parent1_l[index_l] = parent1_index[i];
+		parent2_l[index_l] = parent2_index[i];
+		index_l++;
+	    }
+	    else if ( abs(pdgID[i]) == 13) // muon
+	    {
+		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		parent1_l[index_l] = parent1_index[i];
+		parent2_l[index_l] = parent2_index[i];
+		index_l++;
 	    }
 	}
 
-	if ( index_e == 4 )
+	if ( index_l == 4 )
 	{
 	    int index_z = 0;
 	    for ( int i=0; i<4; i++)
