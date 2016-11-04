@@ -51,12 +51,12 @@ if __name__ == "__main__":
     # Plot for Unfolding Results
     ############################
     
-    files="eemm_185019_cut_hist.root"
+    files="211_eevv_cut.root"
     
     # open file
     fin = TFile(files)
 
-    CUT = ["none", "lepEta", "lepPt", "z1", "z2", "numJet"]
+    CUT = ["none", "lepEta", "leadingLepPt", "subleadingLepPt","missingET", "z", "numJet", "mjj", "deltaEtajj"]
 
     VAR_4 = [ [ ["l"], ["pt", "eta", "phi"] ] ]
     VAR_2 = [ [ ["z"], ["pt", "eta", "phi", "m"] ] ] 
@@ -161,7 +161,7 @@ if __name__ == "__main__":
                     # Draw histograms
                     xtitle = TITLES[var_name][0]
                     ytitle = TITLES[var_name][1]
-                    legends = ["z_ee", "z_mm"]
+                    legends = ["z_ee", "z_vv"]
                     options = ["HIST", "HIST"]            
                     opt_legends = ["L", "L"]                    
                     marker_types = [26, 32]                       
@@ -271,7 +271,7 @@ if __name__ == "__main__":
             xtitle = TITLES[var1+"-"+var2][0]
             ytitle = TITLES[var1+"-"+var2][1]
             var1.replace("1", "ee")
-            var2.replace("2", "mm")
+            var2.replace("2", "vv")
             legends = [var1, var2]
             options = ["HIST", "HIST"]            
             opt_legends = ["L", "L"]                    
