@@ -156,6 +156,8 @@ void raw(string input_file, string output_file)
 	tin->GetEntry(n);
 
 	int index_e=0, index_m=0, index_j=0;
+	int pdgid_e[2]={-1,-1}, pdgid_m[2]={-1,-1};
+
 	for (int i=0; i<10; i++)
 	{
 	    if(status[i] != 1) continue;
@@ -166,11 +168,13 @@ void raw(string input_file, string output_file)
 	    }
 	    else if ( abs(pdgID[i]) == 11) // electron
 	    {
+		pdgid_e[index_e] = pdgID[i];
 		ele[index_e].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
 		index_e++;
 	    }
 	    else if ( abs(pdgID[i]) == 13) // muon
 	    {
+		pdgid_m[index_m] = pdgID[i];
 		muon[index_m].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
 		index_m++;
 	    }
@@ -178,8 +182,11 @@ void raw(string input_file, string output_file)
 
 	if ( index_e == 2 && index_m == 2 )
 	{
-	    z[0] = ele[0] + ele[1];
-	    z[1] = muon[0] + muon[1];
+	    if( (pdgid_e[0] + pdgid_e[1] ) == 0)
+	    {	z[0] = ele[0] + ele[1];	    }
+	    if( (pdgid_m[0] + pdgid_m[1] ) == 0)
+	    {	z[1] = muon[0] + muon[1];   }
+	    
 	    delta_R_ll[0] = sqrt( pow( (ele[0].Eta() - ele[1].Eta()), 2) + pow( (ele[0].Phi() - ele[1].Phi()), 2) );
 	    delta_R_ll[1] = sqrt( pow( (muon[0].Eta() - muon[1].Eta()), 2) + pow( (muon[0].Phi() - muon[1].Phi()), 2) );
 

@@ -160,6 +160,7 @@ void fiducial(string input_file, string output_file)
 	tin->GetEntry(n);
 
 	int index_l=0, index_j=0;
+	int pdgid_l[4] = {-1, -1, -1, -1};
 	for (int i=0; i<10; i++)
 	{
 	    if(status[i] != 1) continue;
@@ -170,6 +171,7 @@ void fiducial(string input_file, string output_file)
 	    }
 	    else if ( abs(pdgID[i]) == 11) // electron
 	    {
+		pdgid_l[index_l] = pdgID[i];
 		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
 		parent1_l[index_l] = parent1_index[i];
 		parent2_l[index_l] = parent2_index[i];
@@ -177,6 +179,7 @@ void fiducial(string input_file, string output_file)
 	    }
 	    else if ( abs(pdgID[i]) == 13) // muon
 	    {
+		pdgid_l[index_l] = pdgID[i];
 		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
 		parent1_l[index_l] = parent1_index[i];
 		parent2_l[index_l] = parent2_index[i];
@@ -191,7 +194,7 @@ void fiducial(string input_file, string output_file)
 	    {
 		for (int j=i+1; j<4; j++)
 		{
-		    if(parent1_l[j] == parent1_l[i]) // do we need to compare their pID ???
+		    if(parent1_l[j] == parent1_l[i] && (pdgid[i] + pdgid[j]) == 0) // do we need to compare their pID ???
 		    {
 			z[index_z] = lep[i] + lep[j];
 			delta_R_ll[index_z] = sqrt( pow( (lep[i].Eta() - lep[j].Eta()), 2) + pow( (lep[i].Phi() - lep[j].Phi()), 2) );
