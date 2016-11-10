@@ -8,10 +8,6 @@
 # import Python system modules
 import os
 import sys
-import glob
-import logging
-import array
-from math import sqrt, fabs, sin, pow
 
 # ROOT paths configuration
 # make sure to run 'source setup.sh' beforehand
@@ -115,6 +111,7 @@ if __name__ == "__main__":
                     "cut on " + cut + " with respect to " + var + " in eeee channel")
                 histos.append(histo_tmp1)
                 histo_tmp2 = fin2.Get(hist_name)
+                # normalize the histogram
                 histo_tmp2.Scale(1. / histo_tmp2.Integral(0, -1))
                 histos.append(histo_tmp2)
 
@@ -162,6 +159,7 @@ if __name__ == "__main__":
                     "cut on " + cut + " with respect to " + var + " in eeee channel")
                 histos.append(histo_tmp1)
                 histo_tmp2 = fin2.Get(hist_name)
+                # normalize the histogram
                 histo_tmp2.Scale(1. / histo_tmp2.Integral(0, -1))
                 histos.append(histo_tmp2)
 
@@ -208,6 +206,7 @@ if __name__ == "__main__":
                 "cut on " + cut + " with respect to " + var + " in eeee channel")
             histos.append(histo_tmp1)
             histo_tmp2 = fin2.Get(hist_name)
+            # normalize the histogram
             histo_tmp2.Scale(1. / histo_tmp2.Integral(0, -1))
             histos.append(histo_tmp2)
 
