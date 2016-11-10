@@ -17,6 +17,7 @@ time_t start, finish;
 
 const vector<string> CUT = {"none", "lepPt", "lepEta", "z1", "z2", "numJet"};
 
+// define the types of maps used later
 typedef map<string, bool> MapType1_Bool;
 typedef map<string, float> MapType1_Float;
 typedef map<string, TH1F *> MapType1_TH1F;
@@ -26,20 +27,13 @@ MapType2_TH1F HIST;
 MapType1_Float VALUE;
 MapType1_Bool FLAG;
 
-
-/* This root script do the following:
- *
- * Read in root file (provided in function parameters) and tree
- * (default name " tree_NOMINAL" ) produced by xAOD codes.
- * Loop through all events in the tree
- *	do pairing for same flavour, opposited charged leptons
- *	extract valuable information
- *	do cut on them
- *  Output tree and root file ( name provided by parameters )
- *
- *
- *  Variables used:
- */
+// this root sciprt reads in the variabls stored in a tree named "vbfnlo" by default
+// and initialize histograms in the defined range for all variables
+// cuts critera are chained to be impletmented on the variables before they are filled
+// into histograms. Note that the cuts criteria are cumulative and the prefix (e.g. lepPt)
+// of the generated histograms indicates passing all the previous cuts criteria as well
+// as itself. Maps are used extensively in this scipt and should be given enough attention
+// if further modification is conducted.
 
 int find_space(string in, int pos=0)
 {
@@ -245,7 +239,7 @@ int cut( string input_file, string output_file)
                 return 3;
         }
 
-        // create histograms
+        // initialize histograms plots without filling
         InitHistVar("l1_pt, l2_pt, l3_pt, l4_pt", "all", 35, 0, 350);
         InitHistVar("l1_eta, l2_eta, l3_eta, l4_eta", "all", 20, -3.5, 3.5);
         InitHistVar("l1_phi, l2_phi, l3_phi, l4_phi", "all", 20, -3.5,3.5);
@@ -349,6 +343,7 @@ int cut( string input_file, string output_file)
                 if( (i % 5000) == 0) // monitoring
                         cout << "event counter   " << i << endl;
 
+                // define a map for the global vairable FLAG
                 FLAG["none"]    = false;
                 FLAG["lepEta"] = false;
                 FLAG["lepPt"]  = false;
@@ -356,6 +351,7 @@ int cut( string input_file, string output_file)
                 FLAG["z1"]     = false;
                 FLAG["z2"]     = false;
                 FLAG["numJet"] = false;
+
                 // clear vector
                 weight = -9999.;
                 l1_pt = -9999.; l1_eta = -9999.; l1_phi = -9999.; l1_e = -9999.;
@@ -379,6 +375,7 @@ int cut( string input_file, string output_file)
                 float zz_rap  = -9999.;
                 tin->GetEntry(i);
 
+                // define a map for the global vairable VALUE
                 VALUE["l1_pt"]  = l1_pt;
                 VALUE["l1_eta"] = l1_eta;
                 VALUE["l1_phi"] = l1_phi;
@@ -446,10 +443,6 @@ int cut( string input_file, string output_file)
                         FLAG["lepEta"] = true;
                         m_lepEta++;
                 }
-// if( ( fabs(l1_eta) > 2.5 && fabs(l1_eta) < 10 ) || ( fabs(l2_eta) > 2.5 && fabs(l2_eta) < 10 ) || ( fabs(l3_eta) > 2.5 && fabs(l3_eta) < 10 ) || ( fabs(l4_eta) > 2.5 && fabs(l4_eta) < 10 ) )
-// {
-//     cout << l1_eta << "\t" << l2_eta << "\t" << l3_eta << "\t" << l4_eta << endl;
-// }
 
                 if(FLAG["lepEta"] && l1_pt > 25)
                 {
@@ -475,6 +468,8 @@ int cut( string input_file, string output_file)
                         m_numJet++;
                 }
 
+                // global flag will be checked again in the following function
+                // before fill the relevant variable values into the histograms
                 FillHistVar(weight);
         }
         fout->cd();
