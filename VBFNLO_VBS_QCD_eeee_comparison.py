@@ -55,26 +55,31 @@ if __name__ == "__main__":
     # common variables in VBS and QCD
     VAR_1 = ["pt", "eta", "phi"]  # for leptons
     VAR_2 = ["pt", "eta", "phi", "m"]  # for bosons
-    VAR_3 = ["zz_m", "jj_m"]
+    VAR_3 = ["zz_m", "jj_m", "delta_eta_jj"]
 
+    # axes titles map
     AXES_TITLES = {
-        "pt": ["Pt [Gev]", "events / 10GeV normalized"],
+        "pt": ["Pt [Gev]", "events / 10 GeV normalized"],
         "eta": ["#eta", "events / 0.35 normalized"],
         "phi": ["#phi", "events / 0.35 5normalized"],
-        "pt_Z": ["Pt_{Z} [GeV]", "events / 20GeV normalized"],
+        "pt_Z": ["Pt_{Z} [GeV]", "events / 20 GeV normalized"],
         "eta_Z": ["#eta_{Z}", "events / 0.35 normalized"],
         "phi_Z": ["#phi_{Z}", "events / 0.35 normalized"],
-        "m_Z": ["M_{Z} [GeV]", "events / 4GeV normalized"],
-        "zz_m": ["M_{ZZ} [GeV]", "events / 10GeV normalized"],
-        "jj_m": ["M_{jj} [GeV]", "events / 40GeV normalized"],
+        "m_Z": ["M_{Z} [GeV]", "events / 4 GeV normalized"],
+        "zz_m": ["M_{ZZ} [GeV]", "events / 10 GeV normalized"],
+        "jj_m": ["M_{jj} [GeV]", "events / 40 GeV normalized"],
+        "delta_eta_jj": ["#Delta#eta_{jj}", "events / 0.25 normalized"]
     }
 
+    # legents map
     # specifically for VAR_3
     LEGENDS = {
-        "zz_m_VBS": "VBS ZZjj",
-        "jj_m_VBS": "VBS ZZjj",
-        "zz_m_QCD": "QCD ZZjj",
-        "jj_m_QCD": "QCD ZZjj"
+        "zz_m_VBS": "VBS ZZ_{jj}",
+        "jj_m_VBS": "VBS ZZ_{jj}",
+        "delta_eta_jj_VBS": "QCD #Delta#eta_{jj}",
+        "zz_m_QCD": "QCD ZZ_{jj}",
+        "jj_m_QCD": "QCD ZZ_{jj}",
+        "delta_eta_jj_QCD": "QCD #Delta#eta_{jj}"
     }
 
     # binning setting of histograms referred from VBFNLO_CUT.cxx
@@ -88,6 +93,7 @@ if __name__ == "__main__":
         "m_Z": np.arange(0, 200, 4).tolist(),
         "zz_m": np.arange(0, 500, 10).tolist(),
         "jj_m": np.arange(0, 2000, 40).tolist(),
+        "delta_eta_jj": np.arange(0, 10, 0.25).tolist(),
     }
 
     for cut in CUT:
@@ -234,5 +240,5 @@ if __name__ == "__main__":
             theone.plot1DHistogram()
             theone.finish()
 
-fin1.Close()
-fin2.Close()
+    fin1.Close()
+    fin2.Close()
