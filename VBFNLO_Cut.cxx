@@ -12,6 +12,7 @@
 #include "TLorentzVector.h"
 using namespace std;
 
+// define the mass of boson as a global variable
 static double Z_MASS = 91.1876;
 time_t start, finish;
 
@@ -219,6 +220,7 @@ void SaveHistVar()
 int cut( string input_file, string output_file)
 {
         time(&start);
+        // read the tree from a root file
         TFile *fin = new TFile(input_file.c_str(), "read");
         if(!fin) {
                 cerr << "Error, input root file " << input_file << " doesn't exit" << endl;
@@ -269,7 +271,6 @@ int cut( string input_file, string output_file)
         int m_z2   = 0;
         int m_numJet = 0;
 
-
         double weight;
         float l1_pt, l1_eta, l1_phi, l1_e;
         float l2_pt, l2_eta, l2_phi, l2_e;
@@ -283,7 +284,6 @@ int cut( string input_file, string output_file)
         float jj_pt, jj_eta, jj_phi, jj_e, jj_m;
         float delta_eta_jj, centrality;
         float delta_R_ll_1, delta_R_ll_2, delta_R_zz, delta_R_jj, delta_R_zz_jj;
-
 
         tin->SetBranchAddress("l1_pt",  &l1_pt);
         tin->SetBranchAddress("l1_eta", &l1_eta);
