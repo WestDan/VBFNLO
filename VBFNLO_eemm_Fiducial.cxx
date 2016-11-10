@@ -155,6 +155,42 @@ void raw(string input_file, string output_file)
 
                 tin->GetEntry(n);
 
+<<<<<<< HEAD
+	int index_e=0, index_m=0, index_j=0;
+	int pdgid_e[2]={-1,-1}, pdgid_m[2]={-1,-1};
+
+	for (int i=0; i<10; i++)
+	{
+	    if(status[i] != 1) continue;
+	    else if (abs(pdgID[i]) == 1 || abs(pdgID[i]) == 2 || abs(pdgID[i])==3 || abs(pdgID[i]) == 4 || abs(pdgID[i]) == 5)
+	    {
+                jet[index_j].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		index_j++;
+	    }
+	    else if ( abs(pdgID[i]) == 11) // electron
+	    {
+		pdgid_e[index_e] = pdgID[i];
+		ele[index_e].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		index_e++;
+	    }
+	    else if ( abs(pdgID[i]) == 13) // muon
+	    {
+		pdgid_m[index_m] = pdgID[i];
+		muon[index_m].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		index_m++;
+	    }
+	}
+
+	if ( index_e == 2 && index_m == 2 )
+	{
+	    if( (pdgid_e[0] + pdgid_e[1] ) == 0)
+	    {	z[0] = ele[0] + ele[1];	    }
+	    if( (pdgid_m[0] + pdgid_m[1] ) == 0)
+	    {	z[1] = muon[0] + muon[1];   }
+	    
+	    delta_R_ll[0] = sqrt( pow( (ele[0].Eta() - ele[1].Eta()), 2) + pow( (ele[0].Phi() - ele[1].Phi()), 2) );
+	    delta_R_ll[1] = sqrt( pow( (muon[0].Eta() - muon[1].Eta()), 2) + pow( (muon[0].Phi() - muon[1].Phi()), 2) );
+=======
                 int index_e=0, index_m=0, index_j=0;
                 for (int i=0; i<10; i++)
                 {
@@ -182,6 +218,7 @@ void raw(string input_file, string output_file)
                         z[1] = muon[0] + muon[1];
                         delta_R_ll[0] = sqrt( pow( (ele[0].Eta() - ele[1].Eta()), 2) + pow( (ele[0].Phi() - ele[1].Phi()), 2) );
                         delta_R_ll[1] = sqrt( pow( (muon[0].Eta() - muon[1].Eta()), 2) + pow( (muon[0].Phi() - muon[1].Phi()), 2) );
+>>>>>>> ca37b2e7d9a1eb8aac161aa56ffc0c309eccdaf5
 
                         // sort leptons
                         if(ele[0].Pt() < ele[1].Pt())

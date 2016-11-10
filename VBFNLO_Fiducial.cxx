@@ -159,6 +159,52 @@ void fiducial(string input_file, string output_file)
 
                 tin->GetEntry(n);
 
+<<<<<<< HEAD
+	int index_l=0, index_j=0;
+	int pdgid_l[4] = {-1, -1, -1, -1};
+	for (int i=0; i<10; i++)
+	{
+	    if(status[i] != 1) continue;
+	    else if (abs(pdgID[i]) == 0 || abs(pdgID[i]) == 1 || abs(pdgID[i]) == 2 || abs(pdgID[i])==3 || abs(pdgID[i]) == 4 || abs(pdgID[i]) == 5 )
+	    {
+                jet[index_j].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		index_j++;
+	    }
+	    else if ( abs(pdgID[i]) == 11) // electron
+	    {
+		pdgid_l[index_l] = pdgID[i];
+		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		parent1_l[index_l] = parent1_index[i];
+		parent2_l[index_l] = parent2_index[i];
+		index_l++;
+	    }
+	    else if ( abs(pdgID[i]) == 13) // muon
+	    {
+		pdgid_l[index_l] = pdgID[i];
+		lep[index_l].SetPxPyPzE(px[i], py[i], pz[i], E[i]);
+		parent1_l[index_l] = parent1_index[i];
+		parent2_l[index_l] = parent2_index[i];
+		index_l++;
+	    }
+	}
+
+	if ( index_l == 4 )
+	{
+	    int index_z = 0;
+	    for ( int i=0; i<4; i++)
+	    {
+		for (int j=i+1; j<4; j++)
+		{
+		    if(parent1_l[j] == parent1_l[i] && (pdgid[i] + pdgid[j]) == 0) // do we need to compare their pID ???
+		    {
+			z[index_z] = lep[i] + lep[j];
+			delta_R_ll[index_z] = sqrt( pow( (lep[i].Eta() - lep[j].Eta()), 2) + pow( (lep[i].Phi() - lep[j].Phi()), 2) );
+			index_z++;
+			break;
+		    }
+		}
+	    }
+=======
                 int index_l=0, index_j=0;
                 for (int i=0; i<10; i++)
                 {
@@ -200,6 +246,7 @@ void fiducial(string input_file, string output_file)
                                         }
                                 }
                         }
+>>>>>>> ca37b2e7d9a1eb8aac161aa56ffc0c309eccdaf5
 
                         if(index_z == 2)
                         {
