@@ -81,7 +81,7 @@ void Tree2Hist(string input_file, string output_file)
         InitHistVar("jj_m", 50, 0, 3000);
         InitHistVar("delta_R_ll_1, delta_R_ll_2, delta_R_zz, delta_R_jj, delta_R_zz_jj", 20, 0, 10);
         InitHistVar("mcweight", 10, 0, 5);
-        InitHistVar("delta_eta_jj", 20, 0, 10);
+        InitHistVar("delta_eta_jj", 40, 0, 10);
         InitHistVar("centrality", 20, -1, 1);
 
         float l1_pt, l1_eta, l1_phi, l1_e;
